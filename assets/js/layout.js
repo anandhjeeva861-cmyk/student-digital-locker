@@ -1,13 +1,14 @@
 /* Shared layout injector for dashboard pages */
-const STUDENT_MENU = [
+const STUDENT_MENU_BASE = [
   ['student-dashboard.html','fa-th-large','Dashboard'],
   ['profile.html','fa-user','Profile'],
   ['personal-documents.html','fa-id-card','Personal Documents'],
   ['online-certificates.html','fa-cloud','Online Certificates'],
   ['offline-certificates.html','fa-folder-open','Offline Certificates'],
   ['academic-certificates.html','fa-graduation-cap','Academic Certificates'],
-  ['notifications.html','fa-bell','Notifications'],
 ];
+
+const STUDENT_MENU = STUDENT_MENU_BASE;
 const TEACHER_MENU = [
   ['teacher-dashboard.html','fa-th-large','Dashboard'],
   ['add-student.html','fa-user-plus','Add Student'],
@@ -21,7 +22,27 @@ function renderLayout(){
   const app = document.querySelector('[data-layout]');
   if(!app) return;
   const role = app.getAttribute('data-layout'); // 'student' | 'teacher'
-  const menu = role==='teacher' ? TEACHER_MENU : STUDENT_MENU;
+
+  // Personal details completion gating (student only)
+  let slProfileCompleted = true;
+  if(role === 'student'){
+    try{
+      slProfileCompleted = !!JSON.parse(localStorage.getItem('sl_profile_completed') || 'false');
+    } catch (err){
+      slProfileCompleted = false;
+    }
+  }
+
+  let menu = role==='teacher' ? TEACHER_MENU : STUDENT_MENU;
+
+  if(role === 'student' && !slProfileCompleted){
+    // Optional dedicated CTA in sidebar for first-time users.
+    // Keep it pointing to profile.html (same page handles edit/read-only).
+    menu = [
+      ['profile.html','fa-user-edit','Complete Personal Details'],
+      ...menu.filter(([h,i,l]) => h !== 'profile.html')
+    ];
+  }
   let user = {};
   try {
     user = JSON.parse(localStorage.getItem('sl_user')||'{}');
@@ -38,10 +59,12 @@ function renderLayout(){
       <nav>
         ${menu.map(([h,i,l])=>`<a class="nav-item" href="${h}"><i class="fas ${i}"></i>${l}</a>`).join('')}
         <a class="nav-item" href="#" onclick="event.preventDefault();slLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+
       </nav>
     </aside>
     <div class="sl-backdrop"></div>
   `;
+  const showNotifications = role==='teacher';
   const navbar = `
     <header class="sl-navbar">
       <button class="icon-btn d-lg-none" id="sidebarToggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
@@ -58,7 +81,7 @@ function renderLayout(){
         <option value="te">TE</option>
       </select>
       <button class="icon-btn theme-toggle" type="button" onclick="slSetTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark')" aria-label="Toggle theme"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></button>
-      <a href="notifications.html" class="icon-btn" aria-label="Notifications"><i class="fas fa-bell"></i><span class="badge-dot"></span></a>
+      ${showNotifications ? `<a href="notifications.html" class="icon-btn" aria-label="Notifications"><i class="fas fa-bell"></i><span class="badge-dot"></span></a>` : ''}
       <a href="profile.html" class="icon-btn" aria-label="Profile"><i class="fas fa-user-circle" style="font-size:1.4rem"></i></a>
     </header>
   `;

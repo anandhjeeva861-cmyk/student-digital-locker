@@ -37,17 +37,39 @@ function handleRegister(formId){
     const fullName = (form.elements.fullName?.value || '').trim();
     const registerNumber = (form.elements.registerNumber?.value || '').trim();
     const department = (form.elements.department?.value || '').trim();
+    const year = (form.elements.year?.value || '').trim();
+    const umis = (form.elements.umis?.value || '').trim();
     const email = (form.elements.email?.value || '').trim();
     const mobile = (form.elements.mobile?.value || '').trim();
     const password = form.elements.password?.value || '';
     const confirmPassword = form.elements.confirmPassword?.value || '';
+
     if(!fullName || fullName.length < 3) return slToast('Enter your full name', 'error');
     if(!registerNumber) return slToast('Register number required', 'error');
     if(!department) return slToast('Select a department', 'error');
+    if(!umis) return slToast('UMIS number required', 'error');
     if(!isEmail(email)) return slToast('Enter a valid college email', 'error');
     if(!isMobile(mobile)) return slToast('Enter a valid 10-digit mobile', 'error');
     if(password !== confirmPassword) return slToast('Passwords do not match', 'error');
     if(passwordStrength(password) < 2) return slToast('Password too weak', 'error');
+
+    // Save personal details immediately so profile can become read-only.
+    try {
+      const profile = {
+        name: fullName,
+        reg: registerNumber,
+        dept: department,
+        cls: year,
+        umis,
+        mob: mobile,
+        email,
+      };
+      localStorage.setItem('sl_profile', JSON.stringify(profile));
+      localStorage.setItem('sl_profile_completed', JSON.stringify(true));
+    } catch (err) {
+      console.warn('Profile save failed:', err);
+    }
+
     slLoader(true);
     setTimeout(()=>{
       slLoader(false);
