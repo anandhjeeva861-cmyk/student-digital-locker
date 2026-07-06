@@ -28,27 +28,22 @@ function renderDashboardInsights(){
   const docs = getDocs();
   const totalDocs = docs.length;
   const categories = ['personal','online','offline','academic'];
-  const filledCategories = categories.filter(c=>countByCategory(c)>0).length;
-  const pendingApprovals = getStudents().filter(s=>!s.verified).length;
   const isTeacher = !!document.querySelector('[data-layout="teacher"]');
+
 
   // Removed student "Locker health" insights per new requirements.
   // Teacher insights remain unchanged.
-  const title = isTeacher ? 'Verification queue' : '';
-  const summary = isTeacher
-    ? `${pendingApprovals} students awaiting review`
-    : '';
-  const note = isTeacher
-    ? 'Keep the approval flow fast and organized.'
-    : '';
-  const stats = isTeacher
-    ? [`${pendingApprovals} pending`, `${totalDocs} files tracked`]
-    : [];
-
   if(!isTeacher){
     // Do not render the insights block for student dashboards.
     return;
   }
+
+  const pendingApprovals = getStudents().filter(s=>!s.verified).length;
+  const title = 'Verification queue';
+  const summary = `${pendingApprovals} students awaiting review`;
+  const note = 'Keep the approval flow fast and organized.';
+  const stats = [`${pendingApprovals} pending`, `${totalDocs} files tracked`];
+
 
 
   hero.insertAdjacentHTML('afterend', `
