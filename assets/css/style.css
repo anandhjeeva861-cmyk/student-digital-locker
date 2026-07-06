@@ -223,9 +223,8 @@ body.dark-mode .table{color:var(--sl-text)}
 .notif-item.read .dot{background:var(--sl-muted)}
 .notif-item .meta{color:var(--sl-muted);font-size:.85rem}
 
-/* Verify badge */
+/* Account badge */
 .badge-verified{background:#16a34a;color:#fff;padding:.4rem .8rem;border-radius:20px;font-size:.85rem}
-.badge-pending{background:#f59e0b;color:#fff;padding:.4rem .8rem;border-radius:20px;font-size:.85rem}
 
 /* Responsive sidebar */
 @media(max-width:991px){

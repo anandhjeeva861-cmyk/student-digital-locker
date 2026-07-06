@@ -1,6 +1,8 @@
-- [x] Remove “Personal Documents” from Student sidebar/menu generation (assets/js/layout.js)
-- [x] Remove “Personal Documents” from student dashboard option/card(s) (student-dashboard.html)
-- [ ] Ensure “Personal Documents” remains visible on student registration only (student-register.html)
-- [ ] Sanity check: sidebar/dashboard do not link to personal details, register still shows it
+# TODO
 
-
+- [x] Plan and implement welcome-message update to show student full name
+- [x] Remove any email-based welcome logic
+- [x] Ensure name is fetched from saved student profile (localStorage keys)
+- [x] Ensure updates on registration/login/logout + refresh
+- [x] Keep UI/design unchanged (only welcome text logic)
+- [x] Verify on all student portal pages that the welcome name stays in sync

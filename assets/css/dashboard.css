@@ -30,15 +30,3 @@
 .welcome-hero::after{width:120px;height:120px;left:-30px;bottom:-40px}
 .welcome-hero h3{margin:0;font-weight:600}
 .welcome-hero p{margin:.25rem 0 0;opacity:.9}
-.sl-insights{
-  display:grid;grid-template-columns:1.1fr .9fr;gap:1rem;align-items:center;
-  background:var(--sl-white);border:1px solid var(--sl-border);border-radius:var(--sl-radius);padding:1.1rem 1.25rem;margin-bottom:1.5rem;box-shadow:var(--sl-shadow);
-}
-.sl-insights .insight-copy h5{margin:0 0 .25rem;font-weight:600}
-.sl-insights .insight-copy p{margin:0;color:var(--sl-muted)}
-.sl-insights .insight-stats{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:flex-end}
-.sl-insights .mini-stat{background:var(--sl-primary-light);color:var(--sl-primary);padding:.55rem .75rem;border-radius:999px;font-size:.85rem;font-weight:600}
-.sl-insights .chart-wrap{display:flex;align-items:flex-end;gap:.45rem;height:84px;margin-top:.85rem;padding-top:.25rem}
-.sl-insights .chart-bar{flex:1;min-width:12px;background:linear-gradient(180deg,var(--sl-primary),var(--sl-accent));border-radius:999px 999px 4px 4px;animation:growBar 1s ease both;transform-origin:bottom}
-.sl-insights .chart-bar:nth-child(2){animation-delay:.1s}.sl-insights .chart-bar:nth-child(3){animation-delay:.2s}.sl-insights .chart-bar:nth-child(4){animation-delay:.3s}
-@keyframes growBar{from{height:0;opacity:.4}to{opacity:1}}

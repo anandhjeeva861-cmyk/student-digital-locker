@@ -38,7 +38,15 @@ function renderLayout(){
   }
 
   let menu = role==='teacher' ? TEACHER_MENU : STUDENT_MENU;
-  const name = user.name || (role==='teacher'?'Teacher':'Student');
+  // Welcome name source of truth (Student): prefer saved student profile name.
+  let profileName = '';
+  try {
+    const profile = JSON.parse(localStorage.getItem('sl_profile') || '{}');
+    profileName = profile?.name || '';
+  } catch (err) {
+    profileName = '';
+  }
+  const name = profileName || user.name || (role==='teacher'?'Teacher':'Student');
 
   const sidebar = `
     <aside class="sl-sidebar">
