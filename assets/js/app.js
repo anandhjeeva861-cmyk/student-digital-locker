@@ -89,15 +89,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.querySelectorAll('.sl-sidebar a.nav-item').forEach(a=>{
     if(a.getAttribute('href') === page) a.classList.add('active');
   });
-  // Personalize welcome
+  // Personalize welcome (Student): prefer saved profile name.
+  // Priority: sl_profile.name -> sl_user.name -> fallback "Student"
   let user = {};
+  let profile = {};
   try {
     user = JSON.parse(localStorage.getItem('sl_user') || '{}');
   } catch (err) {
     console.warn('User profile init failed:', err);
   }
+  try {
+    profile = JSON.parse(localStorage.getItem('sl_profile') || '{}');
+  } catch (err) {
+    profile = {};
+  }
+  const resolvedName = (profile && profile.name) ? profile.name : ((user && user.name) ? user.name : 'Student');
   document.querySelectorAll('[data-user-name]').forEach(el=>{
-    el.textContent = user.name || 'Student';
+    el.textContent = resolvedName;
   });
   syncThemeToggle();
   document.body.classList.add('page-ready');
