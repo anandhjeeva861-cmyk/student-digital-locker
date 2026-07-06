@@ -14,7 +14,7 @@
       <div class="col-md-6"><label class="form-label">Name</label><input name="name" class="form-control" required></div>
       <div class="col-md-6"><label class="form-label">Register Number</label><input name="reg" class="form-control" required></div>
       <div class="col-md-6"><label class="form-label">Department</label>
-<select name="dept" class="form-select"><option>BSC CS</option><option>BSC IT</option><option>AI&ML</option><option>CSDA</option><option>BCOM</option><option>MBA</option></select>
+<select name="dept" class="form-select"><option>BSC CS</option><option>BSC IT</option><option>AI&ML</option><option>CSDA</option><option>BCOM</option><option>MBA</option></select></div>
       <div class="col-md-6"><label class="form-label">Year</label><input name="year" class="form-control"></div>
       <div class="col-md-6"><label class="form-label">Joining Year</label><input name="joiningYear" class="form-control" inputmode="numeric"></div>
       <div class="col-md-6"><label class="form-label">Email</label><input name="email" type="email" class="form-control" required></div>
@@ -22,7 +22,6 @@
     </div>
     <div class="mt-4 d-flex gap-2 flex-wrap">
       <button class="btn btn-primary" type="submit"><i class="fas fa-save me-1"></i>Save</button>
-      <button class="btn btn-outline-success" type="button" onclick="saveAndVerify()"><i class="fas fa-check me-1"></i>Save & Verify</button>
       <button class="btn btn-outline-secondary" type="reset">Reset</button>
     </div>
   </form>
@@ -47,7 +46,7 @@
     return v || '-';
   }
 
-  function saveStudent(verified){
+  function saveStudent(){
     const d = Object.fromEntries(new FormData(f).entries());
     if(!d.name || !d.reg || !isEmail(d.email)) return slToast('Please complete all fields correctly','error');
 
@@ -60,12 +59,11 @@
     delete d.umis;
 
     const list = getStudents();
-    list.push({id:Date.now(), ...d, batchYear, currentAcademicYear, verified});
+    list.push({id:Date.now(), ...d, batchYear, currentAcademicYear});
     saveStudents(list); f.reset();
 
     new bootstrap.Modal(document.getElementById('okModal')).show();
   }
-  f.addEventListener('submit', e=>{ e.preventDefault(); saveStudent(false); });
-  function saveAndVerify(){ if(f.checkValidity()) saveStudent(true); else f.reportValidity(); }
+  f.addEventListener('submit', e=>{ e.preventDefault(); saveStudent(); });
 </script>
 </body></html>

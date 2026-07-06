@@ -18,7 +18,7 @@ StudentLocker-Frontend/
 ├── offline-certificates.html
 ├── academic-certificates.html
 ├── upload-document.html / view-document.html
-├── add-student.html / search-student.html / verify-student.html
+├── add-student.html / search-student.html
 └── assets/
     ├── css/  (style.css, login.css, dashboard.css, responsive.css)
     ├── js/   (app.js, login.js, dashboard.js, validation.js, layout.js, doc-page.js)
@@ -33,7 +33,7 @@ StudentLocker-Frontend/
 - Toast notifications, loading spinner, success animations
 - Upload with drag & drop, progress bar, PDF/PNG/JPG/JPEG only, Local Storage preview
 - Document cards with View / Download / Delete / Preview (modal)
-- Teacher: Add / Search (filters + table) / Verify students
+- Teacher: Add / Search students (filters + table)
 - Ready to integrate with a Java Spring Boot backend (swap Local Storage for REST calls)
 ```
 
